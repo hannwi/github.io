@@ -1,3 +1,11 @@
+알고스팟 BFS (breadth-first search) 문제
+
+링크: https://algospot.com/judge/problem/read/BOJ
+
+다익스트라 알고리즘을 이용해서 푸는 문제
+
+----------------------
+
 다익스트라(Dijkstra) 알고리즘
 
 목적: 그래프 각 정점(node)의 최단경로를 구하는 알고리즘
@@ -17,4 +25,106 @@
   굳이 우선순위 큐를 쓰는 이유?
     최단거리 갱신 횟수를 최소화 --> 그래프의 간선을 한 번 씩만 방문하는 것을 보장할 수 있음.
     
-  
+---------------------- 
+VS2015 에서 작성하였다.
+
+코드:
+
+
+#include <iostream>
+#include <queue>
+#include <vector>
+#include <functional>	// std::greater
+#include <utility>		// pair
+
+using namespace std;
+typedef vector<vector<int>> array2d;
+typedef pair<int, int> pos2d;
+
+void Dijkstra(array2d& input, array2d& dist, const int h, const int w)
+{
+	// priority queue
+	priority_queue<int, vector<pair<int, pos2d>>, greater<pair<int, pos2d>>> q; // sort the smallest element at the top
+
+	// Initialization (start node)
+	q.push(pair<int, pos2d>(0, pos2d(0, 0))); // push starting node
+	dist[0][0] = 0; // update distance
+
+	// Loop
+	while (!q.empty())
+	{
+		pair<int, pos2d> e = q.top(); // pop element with the smallest distance
+		q.pop();
+
+		int here_x = e.second.first;
+		int here_y = e.second.second;
+		int here_min_dist = dist[here_y][here_x];
+		int here_dist = e.first;
+
+		// path with smaller dist. already exists
+		if (here_min_dist < here_dist) // equal is missing because of the first iteration
+			continue;  // skip the node
+
+		vector<vector<int>> delta;
+		delta.push_back(vector<int>({ 0, -1 })); // top
+		delta.push_back(vector<int>({ -1, 0 })); // left
+		delta.push_back(vector<int>({ 1, 0 })); // right
+		delta.push_back(vector<int>({ 0, 1 })); // dowm
+
+		for (auto d : delta)
+		{
+			int there_x = here_x + d[0];
+			int there_y = here_y + d[1];
+
+			// out of index
+			if (there_y < 0 || there_y >= h || there_x < 0 || there_x >= w)
+				continue;
+
+			int there_min_dist = dist[there_y][there_x];
+			int there_dist = here_min_dist + input[there_y][there_x];
+
+			// if path with smaller dist is found
+			if (there_dist < there_min_dist)
+			{
+				cout << "(" << there_x << ", " << there_y << ")" << endl;
+				// push neighbor node, update distance
+				q.push(pair<int, pos2d>(there_dist, pos2d(there_x, there_y)));
+				dist[there_y][there_x] = there_dist;
+			}
+		}
+	}
+}
+
+void main()
+{
+	// Input: 2D matrix
+	const int height = 4;
+	const int width = 3;
+	array2d input;
+	input.push_back(vector<int>({ 0, 1, 1 }));
+	input.push_back(vector<int>({ 1, 1, 1 }));
+	input.push_back(vector<int>({ 1, 1, 0 }));
+	input.push_back(vector<int>({ 1, 1, 0 }));
+
+	// Output: array for minimum distance
+	array2d dist;
+	dist.push_back(vector<int>({ INT_MAX, INT_MAX, INT_MAX }));
+	dist.push_back(vector<int>({ INT_MAX, INT_MAX, INT_MAX }));
+	dist.push_back(vector<int>({ INT_MAX, INT_MAX, INT_MAX }));
+	dist.push_back(vector<int>({ INT_MAX, INT_MAX, INT_MAX }));
+
+	// Run algorithm
+	Dijkstra(input, dist, height, width);
+
+	// Print output
+	for (int y = 0; y < height; y++)
+	{
+		for (int x = 0; x < width; x++)
+			cout << dist[y][x] << ", ";
+		cout << endl;
+	}
+
+	// Pause
+	char a;
+	cin >> a;
+}
