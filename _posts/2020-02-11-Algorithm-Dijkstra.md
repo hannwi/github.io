@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Dijkstra Algorithm"
+title:  "다익스트라(Dijkstra) 알고리즘"
 crawlertitle: "Dijkstra Algorithm"
 summary: "Study Dijkstra algorithm"
 date:   2020-02-11
@@ -8,31 +8,28 @@ categories: posts
 tags: 'dijkstra'
 author: Hannwi
 ---
-
-# 다익스트라(Dijkstra) 알고리즘
-
-## 목적
+### 목적
 그래프 각 정점(node)의 최단경로를 구하는 알고리즘
 
-## 조건
+### 조건
 단일 시작점을 갖는 그래프
 방향 그래프(directed graph)의 경우: 음수 사이클이 없는 그래프
 무방향 그래프(undirected graph)의 경우: 양수 가중치(positive weight)를 갖는 그래프
 무방향 그래프의 경우, 음수 가중치가 하나라도 있으면 음수 사이클이 형성된다.
 
-## 방법 개요
+### 방법 개요
 우선순위 큐(priority queue)를 사용한 너비 우선 탐색(breadth first search)
 
-## 고찰
+### 고찰
 우선순위 큐를 쓰는 이유?
 	더 늦게 ‘발견＇한 노드라도 더 먼저 ‘방문＇할 수 있게 하기 위함
 큐에서 요소를 꺼낼 때 말고, 요소를 넣을 때 최단거리 정보를 갱신하는 이유?
 	조금이라도 빨리 dist[] 를 업데이트하게 되면 search space 가 줄어든다.
 
-## 참고 문제 
+### 참고 문제 
 [알고스팟_BFS][problem_link] (breadth-first search)
 
-## 코드
+### 코드
 VS2015 에서 작성하였다.
 
 {% highlight cpp %}
