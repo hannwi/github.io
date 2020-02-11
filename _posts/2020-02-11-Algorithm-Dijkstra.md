@@ -9,7 +9,7 @@ tags: 'dijkstra'
 author: Hannwi
 ---
 
-다익스트라(Dijkstra) 알고리즘
+##다익스트라(Dijkstra) 알고리즘
 
 목적: 그래프 각 정점(node)의 최단경로를 구하는 알고리즘
 
