@@ -2,20 +2,12 @@
 layout: post
 title:  "Dijkstra Algorithm"
 crawlertitle: "Dijkstra Algorithm"
-summary: "Study about Dijkstra Algorithm"
+summary: "Study Dijkstra algorithm"
 date:   2020-02-11
 categories: posts
 tags: 'dijkstra'
 author: Hannwi
 ---
-
-알고스팟 BFS (breadth-first search) 문제
-
-링크: https://algospot.com/judge/problem/read/BOJ
-
-다익스트라 알고리즘을 이용해서 푸는 문제
-
-----------------------
 
 다익스트라(Dijkstra) 알고리즘
 
@@ -34,8 +26,10 @@ author: Hannwi
 큐에서 요소를 꺼낼 때 말고, 요소를 넣을 때 최단거리 정보를 갱신하는 이유?
 	조금이라도 빨리 dist[] 를 업데이트하게 되면 search space 가 줄어든다.
 
-    
----------------------- 
+참고 문제: 알고스팟 BFS (breadth-first search) [link][problem_link]
+[problem_link]: https://algospot.com/judge/problem/read/BOJ
+
+코드:
 VS2015 에서 작성하였다.
 
 {% highlight cpp %}
