@@ -38,9 +38,7 @@ author: Hannwi
 ---------------------- 
 VS2015 에서 작성하였다.
 
-코드:
-
-
+{% highlight c++ %}
 #include <iostream>
 #include <queue>
 #include <vector>
@@ -138,3 +136,4 @@ void main()
 	char a;
 	cin >> a;
 }
+{% endhighlight %}
