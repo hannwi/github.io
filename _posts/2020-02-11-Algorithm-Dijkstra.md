@@ -26,7 +26,7 @@ author: Hannwi
 큐에서 요소를 꺼낼 때 말고, 요소를 넣을 때 최단거리 정보를 갱신하는 이유?
 	조금이라도 빨리 dist[] 를 업데이트하게 되면 search space 가 줄어든다.
 
-참고 문제: 알고스팟 BFS (breadth-first search) [link][problem_link]
+참고 문제: [알고스팟_BFS][problem_link] (breadth-first search)
 
 코드:
 VS2015 에서 작성하였다.
