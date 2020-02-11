@@ -27,7 +27,6 @@ author: Hannwi
 	조금이라도 빨리 dist[] 를 업데이트하게 되면 search space 가 줄어든다.
 
 참고 문제: 알고스팟 BFS (breadth-first search) [link][problem_link]
-[problem_link]: https://algospot.com/judge/problem/read/BOJ
 
 코드:
 VS2015 에서 작성하였다.
@@ -131,3 +130,5 @@ void main()
 	cin >> a;
 }
 {% endhighlight %}
+
+[problem_link]: https://algospot.com/judge/problem/read/BOJ
