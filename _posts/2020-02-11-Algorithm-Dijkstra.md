@@ -38,7 +38,7 @@ author: Hannwi
 ---------------------- 
 VS2015 에서 작성하였다.
 
-{% highlight c++ %}
+{% highlight c %}
 #include <iostream>
 #include <queue>
 #include <vector>
