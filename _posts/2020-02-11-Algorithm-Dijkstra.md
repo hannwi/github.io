@@ -16,8 +16,6 @@ author: Hannwi
 보통 그래프에는 `정점(node)`과 `간선(edge)`이 존재하고, 간선에 `가중치(weight)`가 부여된다. (가중치가 없을 때는 모든 간선이 1 값을 갖는다.
 `최단거리`란, 특정 시작 정점에서 종료 정점으로 이동하기 위해 지나는 간선의 가중치 합이 가장 작은 경우를 의미한다.
 
-![undirected-graph](/assets/images/algorithm/dijkstra/undirected_graph.png)
-
 <p align="center">
 	<img src="/assets/images/algorithm/dijkstra/undirected_graph.png">
 </p>
