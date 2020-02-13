@@ -17,7 +17,7 @@ author: Hannwi
 `최단거리`란, 특정 시작 정점에서 종료 정점으로 이동하기 위해 지나는 간선의 가중치 합이 가장 작은 경우를 의미한다.
 
 <p align="center">
-	<img src="/assets/images/algorithm/dijkstra/undirected_graph.png">
+	<img src="/assets/images/algorithm/dijkstra/undirected_graph.png"> *undirected graph with weighted edges*
 </p>
 
 그래프의 최단거리 알고리즘은 여러 가지가 존재하지만, 그 중 가장 유명한(?) 다익스트라(Dijkstra) 알고리즘에 대해 정리해본다.
