@@ -18,7 +18,7 @@ author: Hannwi
 
 ![undirected-graph](/assets/images/algorithm/dijkstra/undirected_graph.png)
 
-<img align="center" src="/assets/images/algorithm/dijkstra/undirected_graph.png">
+<img align="right" src="/assets/images/algorithm/dijkstra/undirected_graph.png">
 
 그래프의 최단거리 알고리즘은 여러 가지가 존재하지만, 그 중 가장 유명한(?) 다익스트라(Dijkstra) 알고리즘에 대해 정리해본다.
 
