@@ -45,6 +45,25 @@ author: Hannwi
 ### 방법 개요
 우선순위 큐(priority queue)를 사용한 너비 우선 탐색(breadth first search)
 
+방법
+초기화
+모든 node 의 dist[] 값을 infinite 으로 설정
+시작 node 의 dist[] 값을 0으로 설정
+(0, s) 를 queue 에 넣는다.
+loop (while queue is not empty)
+queue 에서 요소를 꺼낸다.
+꺼낸 요소의 dist 값이 dist[] 값보다 크다면 loop 를 skip 한다.
+인접 node 들을 조사한다. (BFS)
+인접 node 로 이동할 때의 dist 총 합이 dist[node] 보다 작아진다면 dist[] 값을 갱신한다.
+갱신된 node 와 dist 쌍만 queue에 넣는다.
+
+우선순위 큐를 사용하지 않는 Dijkstra
+핵심 논리는 똑같음
+우선순위 큐 대신 매번 for 문을 돌면서 아직 방문하지 않은 node 중 최소 거리의 node 를 방문
+visited[] 사용하여 한 번 방문한 node 는 다시 방문하지 않음
+아직 방문하지 않은 인접 node 들의 dist[] 를 갱신
+node 개수가 적거나 edge 개수가 많은 경우 유리
+
 ### 고찰
 우선순위 큐를 쓰는 이유?
 	더 늦게 ‘발견＇한 노드라도 더 먼저 ‘방문＇할 수 있게 하기 위함
