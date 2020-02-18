@@ -6,56 +6,142 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 13 Feb 2020 17:42:35 +0900</pubDate>
-    <lastBuildDate>Thu, 13 Feb 2020 17:42:35 +0900</lastBuildDate>
+    <pubDate>Tue, 18 Feb 2020 20:18:15 +0900</pubDate>
+    <lastBuildDate>Tue, 18 Feb 2020 20:18:15 +0900</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
-        <title>다익스트라(Dijkstra) 알고리즘</title>
-        <description>&lt;h3 id=&quot;최단거리-문제&quot;&gt;최단거리 문제&lt;/h3&gt;
-&lt;p&gt;알고리즘 문제를 풀다 보면, 문제를 &lt;code class=&quot;highlighter-rouge&quot;&gt;그래프&lt;/code&gt;로 모델링하여 그래프의 최단거리를 구해야 할 때가 있다.&lt;/p&gt;
+        <title>Dijkstra Algorithm 02 (Procdure)</title>
+        <description>&lt;p&gt;이번 포스트에서는 다익스트라 알고리즘의 자세한 진행 과정에 대해서 정리한다.&lt;/p&gt;
 
-&lt;p&gt;예시 문제: &lt;a href=&quot;https://algospot.com/judge/problem/read/BOJ&quot;&gt;알고스팟_BFS&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;그래프는 &lt;code class=&quot;highlighter-rouge&quot;&gt;정점(node)&lt;/code&gt; 과 &lt;code class=&quot;highlighter-rouge&quot;&gt;간선(edge)&lt;/code&gt;으로 이루어진다. 그리고 각 간선은 &lt;code class=&quot;highlighter-rouge&quot;&gt;가중치(weight)&lt;/code&gt;를 가지고 있다. (가중치가 없을 때는 모든 간선이 1 의 가중치 값을 갖는다고 가정한다.)&lt;br /&gt;
-또한, 간선 종류에 따라 정해진 방향이 있는 간선으로 이루어진 &lt;code class=&quot;highlighter-rouge&quot;&gt;방향 그래프(directed graph)&lt;/code&gt;와, 양 방향으로 이동이 가능한 간선으로 이루어진 &lt;code class=&quot;highlighter-rouge&quot;&gt;무방향 그래프(undirected graph)&lt;/code&gt;로 분류된다.&lt;/p&gt;
+&lt;h4 id=&quot;알고리즘-예제&quot;&gt;알고리즘 예제&lt;/h4&gt;
 
 &lt;p align=&quot;center&quot;&gt;
-	&lt;img src=&quot;/assets/images/algorithm/dijkstra/undirected_graph.png&quot; /&gt;&lt;br /&gt;
-	&lt;em&gt;undirected graph with weighted edges&lt;/em&gt;
+	&lt;img src=&quot;/assets/images/algorithm/dijkstra/procedure_01.png&quot; /&gt;&lt;br /&gt;
+	&lt;em&gt;caption&lt;/em&gt;
 &lt;/p&gt;
-
-&lt;p&gt;그래프의 특정 정점으로부터 특정 정점으로 이동하기 위해 지나가는 간선들의 집합을 &lt;code class=&quot;highlighter-rouge&quot;&gt;경로&lt;/code&gt;라고 하자. 이 때, 경로의 가중치 합이 그 경로의 &lt;code class=&quot;highlighter-rouge&quot;&gt;거리&lt;/code&gt;가 된다.&lt;br /&gt;
-그래프의 &lt;strong&gt;최단거리&lt;/strong&gt;란, 특정 시작 정점 s에서 출발하여 종료 정점으로 도착하기까지 지나는 모든 경로 중에서 가장 거리가 작은 경로의 거리 값을 의미한다.&lt;/p&gt;
 
 &lt;p align=&quot;center&quot;&gt;
-	&lt;img width=&quot;400&quot; src=&quot;/assets/images/algorithm/dijkstra/undirected_graph2_min_distance.png&quot; /&gt;&lt;br /&gt;
-	&lt;em&gt;minimum distances (red figures) from &lt;strong&gt;s&lt;/strong&gt; to each node.&lt;/em&gt;
+	&lt;img src=&quot;/assets/images/algorithm/dijkstra/procedure_02.png&quot; /&gt;&lt;br /&gt;
+	&lt;em&gt;caption&lt;/em&gt;
 &lt;/p&gt;
 
-&lt;p&gt;그래프의 최단거리를 구하는 알고리즘은 여러 가지가 존재하지만, 이 포스트에서는 그 중 가장 유명한(?) 다익스트라(Dijkstra) 알고리즘에 대해 공부한 내용을 정리해본다.&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;
+	&lt;img src=&quot;/assets/images/algorithm/dijkstra/procedure_03.png&quot; /&gt;&lt;br /&gt;
+	&lt;em&gt;caption&lt;/em&gt;
+&lt;/p&gt;
 
-&lt;h3 id=&quot;목적&quot;&gt;목적&lt;/h3&gt;
-&lt;p&gt;다익스트라 알고리즘은 정해진 시작 정점 s로부터 다른 모든 정점까지의 최단거리를 구해주는 알고리즘이다.&lt;br /&gt;
-그래서 시작점이 정해져 있는 문제에서 사용되며, 시작점이 정해져있지 않을 때는 다익스트라를 한 번 만 실행해서는 답을 구할 수 없다.&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;
+	&lt;img src=&quot;/assets/images/algorithm/dijkstra/procedure_04.png&quot; /&gt;&lt;br /&gt;
+	&lt;em&gt;caption&lt;/em&gt;
+&lt;/p&gt;
 
-&lt;h3 id=&quot;조건&quot;&gt;조건&lt;/h3&gt;
+&lt;p align=&quot;center&quot;&gt;
+	&lt;img src=&quot;/assets/images/algorithm/dijkstra/procedure_05.png&quot; /&gt;&lt;br /&gt;
+	&lt;em&gt;caption&lt;/em&gt;
+&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+	&lt;img src=&quot;/assets/images/algorithm/dijkstra/procedure_06.png&quot; /&gt;&lt;br /&gt;
+	&lt;em&gt;caption&lt;/em&gt;
+&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+	&lt;img src=&quot;/assets/images/algorithm/dijkstra/procedure_07.png&quot; /&gt;&lt;br /&gt;
+	&lt;em&gt;caption&lt;/em&gt;
+&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+	&lt;img src=&quot;/assets/images/algorithm/dijkstra/procedure_08.png&quot; /&gt;&lt;br /&gt;
+	&lt;em&gt;caption&lt;/em&gt;
+&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+	&lt;img src=&quot;/assets/images/algorithm/dijkstra/procedure_09.png&quot; /&gt;&lt;br /&gt;
+	&lt;em&gt;caption&lt;/em&gt;
+&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+	&lt;img src=&quot;/assets/images/algorithm/dijkstra/procedure_10.png&quot; /&gt;&lt;br /&gt;
+	&lt;em&gt;caption&lt;/em&gt;
+&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+	&lt;img src=&quot;/assets/images/algorithm/dijkstra/procedure_11.png&quot; /&gt;&lt;br /&gt;
+	&lt;em&gt;caption&lt;/em&gt;
+&lt;/p&gt;
+
+&lt;p&gt;방법
+초기화
+모든 node 의 dist[] 값을 infinite 으로 설정
+시작 node 의 dist[] 값을 0으로 설정
+(0, s) 를 queue 에 넣는다.
+loop (while queue is not empty)
+queue 에서 요소를 꺼낸다.
+꺼낸 요소의 dist 값이 dist[] 값보다 크다면 loop 를 skip 한다.
+인접 node 들을 조사한다. (BFS)
+인접 node 로 이동할 때의 dist 총 합이 dist[node] 보다 작아진다면 dist[] 값을 갱신한다.
+갱신된 node 와 dist 쌍만 queue에 넣는다.&lt;/p&gt;
+
+&lt;p&gt;우선순위 큐를 사용하지 않는 Dijkstra
+핵심 논리는 똑같음
+우선순위 큐 대신 매번 for 문을 돌면서 아직 방문하지 않은 node 중 최소 거리의 node 를 방문
+visited[] 사용하여 한 번 방문한 node 는 다시 방문하지 않음
+아직 방문하지 않은 인접 node 들의 dist[] 를 갱신
+node 개수가 적거나 edge 개수가 많은 경우 유리&lt;/p&gt;
+
+&lt;h4 id=&quot;알고리즘-과정-예제&quot;&gt;알고리즘 과정 예제&lt;/h4&gt;
+&lt;p&gt;우선순위 큐
+(Node 번호, node 까지 최단거리)를 쌍으로 저장
+최단거리 값을 기준으로 항상 최저값을 가장 아래에 정렬해줌
+결과 행렬
+모든 노드까지의 최단거리가 저장됨
+알고리즘 진행
+항상 최단거리인 node 를 우선적으로 방문
+모든 node 를 한 번 씩만 방문하는 것을 보장&lt;/p&gt;
+
+&lt;p&gt;노드 s 에서부터 시작 (방문여부, 결과행렬 초기화)&lt;/p&gt;
+
+&lt;p&gt;연결된 모든 인접 노드를 큐에 추가&lt;/p&gt;
+
+&lt;p&gt;큐에서 값을 빼내면서 해당 노드를 방문
+자동으로 가장 작은 거리를 갖는 값이 나옴
+해당 노드까지의 최단거리이므로, 결과 행렬에 저장&lt;/p&gt;
+
+&lt;p&gt;방문한 노드에서부터 재귀적으로 같은 동작 반복 수행
+인접 노드를 큐에 추가
+현재까지의 최단거리(2) + 인접 노드까지의 거리(4)를 더한 값이 인접 노드까지의 총 거리가 됨
+이미 방문한 노드(s)는 다시 갈 필요 없으므로 제외&lt;/p&gt;
+
+&lt;p&gt;우선순위 큐에 의해 추가된 것 중 가장 작은 거리를 갖는 노드가 맨 밑으로 온다.&lt;/p&gt;
+
+&lt;p&gt;큐에서 값을 꺼내며 방문
+결과 행렬 갱신&lt;/p&gt;
+
+&lt;p&gt;방문한 노드의 인접 노드를 다시 큐에 추가&lt;/p&gt;
+
+&lt;p&gt;우선순위 큐에 의해 추가된 것 중 가장 작은 거리를 갖는 노드가 맨 밑으로 온다.&lt;/p&gt;
+
+&lt;p&gt;큐에서 값을 꺼내며 방문
+결과 행렬 갱신&lt;/p&gt;
+
+&lt;p&gt;이미 방문했으므로 (b, 12) 는 skip
+우선순위 큐가 empty 가 되면 알고리즘 종료&lt;/p&gt;
+
+&lt;h4 id=&quot;고찰&quot;&gt;고찰&lt;/h4&gt;
+&lt;p&gt;우선순위 큐를 쓰는 이유?
+	더 늦게 ‘발견＇한 노드라도 더 먼저 ‘방문＇할 수 있게 하기 위함
+큐에서 요소를 꺼낼 때 말고, 요소를 넣을 때 최단거리 정보를 갱신하는 이유?
+	조금이라도 빨리 dist[] 를 업데이트하게 되면 search space 가 줄어든다.&lt;/p&gt;
+
+&lt;h4 id=&quot;조건&quot;&gt;조건&lt;/h4&gt;
 &lt;p&gt;어떤 그래프에서 다익스트라를 사용할 수 있을까?&lt;br /&gt;
 &lt;code class=&quot;highlighter-rouge&quot;&gt;무방향 그래프&lt;/code&gt;의 경우, 모든 간선의 &lt;strong&gt;가중치 값이 양수&lt;/strong&gt;여야만 알고리즘을 적용할 수 있다. 만약 가중치 값에 음수가 존재하면, 다익스트라 알고리즘이 최단거리를 빠르게 찾기 위한 전제조건이 성립되지 않아 적용이 불가능하다.&lt;br /&gt;
 게다가, 만약 동일한 간선을 여러번 지날 수 없다는 조건이 따로 있지 않다면, 음수 가중치를 갖는 간선을 무한대로 왕복하면 최단거리가 마이너스 무한대가 나올 것이다. 문제 자체가 성립되지 않는다.&lt;br /&gt;
 &lt;code class=&quot;highlighter-rouge&quot;&gt;방향 그래프&lt;/code&gt;의 경우엔, &lt;code class=&quot;highlighter-rouge&quot;&gt;음수 사이클&lt;/code&gt;이 없다면 적용 가능하다. 음수 사이클이란, 무한히 같은 경로를 돌면서 거리가 마이너스 무한대로 발산할 수 있는 경로를 의미한다.
 설명의 편의를 위해, 여기서는 모든 간선 가중치 값이 양수인 무방향 그래프를 가정하고 설명을 진행한다.&lt;/p&gt;
 
-&lt;h3 id=&quot;방법-개요&quot;&gt;방법 개요&lt;/h3&gt;
-&lt;p&gt;우선순위 큐(priority queue)를 사용한 너비 우선 탐색(breadth first search)&lt;/p&gt;
-
-&lt;h3 id=&quot;고찰&quot;&gt;고찰&lt;/h3&gt;
-&lt;p&gt;우선순위 큐를 쓰는 이유?
-	더 늦게 ‘발견＇한 노드라도 더 먼저 ‘방문＇할 수 있게 하기 위함
-큐에서 요소를 꺼낼 때 말고, 요소를 넣을 때 최단거리 정보를 갱신하는 이유?
-	조금이라도 빨리 dist[] 를 업데이트하게 되면 search space 가 줄어든다.&lt;/p&gt;
-
-&lt;h3 id=&quot;코드&quot;&gt;코드&lt;/h3&gt;
+&lt;h4 id=&quot;코드&quot;&gt;코드&lt;/h4&gt;
 &lt;p&gt;VS2015 에서 작성하였다.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-cpp&quot; data-lang=&quot;cpp&quot;&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;iostream&amp;gt;
@@ -158,8 +244,56 @@
 
 </description>
         <pubDate>Tue, 11 Feb 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/posts/Algorithm-Dijkstra/</link>
-        <guid isPermaLink="true">http://localhost:4000/posts/Algorithm-Dijkstra/</guid>
+        <link>http://localhost:4000/posts/Algorithm-Dijkstra-02/</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/Algorithm-Dijkstra-02/</guid>
+        
+        <category>dijkstra</category>
+        
+        
+        <category>posts</category>
+        
+      </item>
+    
+      <item>
+        <title>Dijkstra Algorithm 01 (Intro)</title>
+        <description>&lt;h3 id=&quot;최단거리-문제&quot;&gt;최단거리 문제&lt;/h3&gt;
+&lt;p&gt;알고리즘 문제를 풀다 보면, “어떤 점수의 최대값, 최소값 등을 구하시오.” 같은 문제를 본다.
+이 때 문제가 &lt;code class=&quot;highlighter-rouge&quot;&gt;그래프&lt;/code&gt;로 모델링 가능하다면, 대부분 그래프의 최단거리를 계산함으로써 답을 구할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;예시 문제: &lt;a href=&quot;https://algospot.com/judge/problem/read/BOJ&quot;&gt;알고스팟_BFS&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;그래프graph란&quot;&gt;그래프(Graph)란?&lt;/h4&gt;
+&lt;p&gt;그래프는 &lt;code class=&quot;highlighter-rouge&quot;&gt;정점(node)&lt;/code&gt; 과 &lt;code class=&quot;highlighter-rouge&quot;&gt;간선(edge)&lt;/code&gt;으로 이루어진 집합을 의미한다. 각 간선은 &lt;code class=&quot;highlighter-rouge&quot;&gt;가중치(weight)&lt;/code&gt;를 가지고 있을 수 있으며, 가중치가 없을 때는 모든 간선이 1 의 가중치 값을 갖는다고 가정한다.&lt;br /&gt;
+또한, 간선의 방향성 종류에 따라 두 가지로 그래프를 분류할 수 있는데, 간선에 방향성이 있으면 &lt;code class=&quot;highlighter-rouge&quot;&gt;방향 그래프(directed graph)&lt;/code&gt;와, 방향성이 없으면 (양 방향으로 이동이 가능) &lt;code class=&quot;highlighter-rouge&quot;&gt;무방향 그래프(undirected graph)&lt;/code&gt;라 부른다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+	&lt;img src=&quot;/assets/images/algorithm/dijkstra/undirected_graph.png&quot; /&gt;&lt;br /&gt;
+	&lt;em&gt;undirected graph with weighted edges&lt;/em&gt;
+&lt;/p&gt;
+
+&lt;h4 id=&quot;그래프의-경로path와-거리distance&quot;&gt;그래프의 경로(path)와 거리(distance)&lt;/h4&gt;
+&lt;p&gt;그래프의 특정 정점으로부터 특정 정점으로 이동하기 위해 지나가는 간선들의 집합을 &lt;code class=&quot;highlighter-rouge&quot;&gt;경로&lt;/code&gt;라고 하자. 이 때, 경로의 가중치 합이 그 경로의 &lt;code class=&quot;highlighter-rouge&quot;&gt;거리&lt;/code&gt;가 된다.&lt;br /&gt;
+그래프의 &lt;strong&gt;최단거리&lt;/strong&gt;란, 특정 시작 정점 s에서 출발하여 종료 정점으로 도착하기까지 지나는 모든 경로 중에서 가장 거리가 작은 경로의 거리 값을 의미한다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+	&lt;img width=&quot;400&quot; src=&quot;/assets/images/algorithm/dijkstra/undirected_graph2_min_distance.png&quot; /&gt;&lt;br /&gt;
+	&lt;em&gt;minimum distances (red figures) from &lt;strong&gt;s&lt;/strong&gt; to each node.&lt;/em&gt;
+&lt;/p&gt;
+
+&lt;p&gt;그래프의 최단거리를 구하는 알고리즘은 여러 가지가 존재하지만, 이 포스트에서는 그 중 가장 유명한(?) 다익스트라(Dijkstra) 알고리즘에 대해 공부한 내용을 정리해본다.&lt;/p&gt;
+
+&lt;h3 id=&quot;다익스트라dijkstra-알고리즘&quot;&gt;다익스트라(Dijkstra) 알고리즘&lt;/h3&gt;
+&lt;h4 id=&quot;목적&quot;&gt;목적&lt;/h4&gt;
+&lt;p&gt;다익스트라 알고리즘은 정해진 시작 정점 s로부터 &lt;code class=&quot;highlighter-rouge&quot;&gt;다른 모든 정점&lt;/code&gt;까지의 최단거리를 구해주는 알고리즘이다.&lt;br /&gt;
+그래서 시작점이 정해져 있는 문제에서 사용되며, 시작점이 정해져있지 않을 때는 다익스트라를 여러 번 실행해야 한다.&lt;/p&gt;
+
+&lt;h4 id=&quot;방법-개요&quot;&gt;방법 개요&lt;/h4&gt;
+&lt;p&gt;우선순위 큐(priority queue)를 사용한 너비 우선 탐색(breadth first search)&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 11 Feb 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/posts/Algorithm-Dijkstra-01/</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/Algorithm-Dijkstra-01/</guid>
         
         <category>dijkstra</category>
         
