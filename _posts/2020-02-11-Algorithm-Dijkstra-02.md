@@ -11,61 +11,78 @@ author: Hannwi
 
 이번 포스트에서는 다익스트라 알고리즘의 자세한 진행 과정에 대해서 정리한다.
 
+우선순위 큐(priority queue)를 사용한 너비 우선 탐색(breadth first search)이 대표적이며, 
+
 #### 알고리즘 예제
+우선순위 큐 
+(Node 번호, node 까지 최단거리)를 쌍으로 저장
+최단거리 값을 기준으로 항상 최저값을 가장 아래에 정렬해줌
+결과 행렬
+모든 노드까지의 최단거리가 저장됨
+
+알고리즘 진행
+항상 최단거리인 node 를 우선적으로 방문
+모든 node 를 한 번 씩만 방문하는 것을 보장
+
 
 <p align="center">
-	<img src="/assets/images/algorithm/dijkstra/procedure_01.png"><br>
-	<em>caption</em>
+	<img src="/assets/images/algorithm/dijkstra/procedure_01.png">
 </p>
 
 <p align="center">
-	<img src="/assets/images/algorithm/dijkstra/procedure_02.png"><br>
-	<em>caption</em>
+	<img src="/assets/images/algorithm/dijkstra/procedure_02.png">
+	노드 <strong>s</strong> 에서부터 시작 (방문여부, 결과행렬 초기화)
 </p>
 
 <p align="center">
-	<img src="/assets/images/algorithm/dijkstra/procedure_03.png"><br>
-	<em>caption</em>
+	<img src="/assets/images/algorithm/dijkstra/procedure_03.png">
+	연결된 모든 인접 노드(<strong>a</strong>, <strong>b</strong>)를 큐에 추가<br>
+	가장 작은 거리를 가진 항목이 top 으로 이동
 </p>
 
 <p align="center">
-	<img src="/assets/images/algorithm/dijkstra/procedure_04.png"><br>
-	<em>caption</em>
+	<img src="/assets/images/algorithm/dijkstra/procedure_04.png">
+	큐에서 top 값 (<strong>a</strong>, 2)을 빼냄과 동시에 해당 노드를 방문<br>
+	빠진 거리값(2)이 해당 노드까지의 최단거리이므로, 이를 결과 행렬에 저장
 </p>
 
 <p align="center">
-	<img src="/assets/images/algorithm/dijkstra/procedure_05.png"><br>
-	<em>caption</em>
+	<img src="/assets/images/algorithm/dijkstra/procedure_05.png">
+	두 번째로 방문한 노드(<strong>a</strong>)에서 같은 동작을 수행<br>
+	인접 노드(<strong>c</strong>)를 큐에 추가 (이미 방문한 노드(<strong>s</strong>)는 다시 갈 필요 없으므로 제외)<br>
+	현재 노드까지의 최단거리(2)와 현재 노즈에서 인접 노드까지의 거리(4)를 더한 값(6)이 인접 노드까지의 총 거리가 되므로, queue에는 (<strong>c</strong>, 6)이 입력됨
 </p>
 
 <p align="center">
-	<img src="/assets/images/algorithm/dijkstra/procedure_06.png"><br>
-	<em>caption</em>
+	<img src="/assets/images/algorithm/dijkstra/procedure_06.png">
+	우선순위 큐에 의해 추가된 항목 중 가장 작은 거리를 갖는 노드가 top 으로 이동
 </p>
 
 <p align="center">
-	<img src="/assets/images/algorithm/dijkstra/procedure_07.png"><br>
-	<em>caption</em>
+	<img src="/assets/images/algorithm/dijkstra/procedure_07.png">
+	큐에서 top 항목을 꺼내며 꺼낸 노드(<strong>c</strong>)를 방문 (결과 행렬 갱신)
 </p>
 
 <p align="center">
-	<img src="/assets/images/algorithm/dijkstra/procedure_08.png"><br>
-	<em>caption</em>
+	<img src="/assets/images/algorithm/dijkstra/procedure_08.png">
+	방문한 노드의 인접 노드(<strong>b</strong>)를 다시 큐에 추가
 </p>
 
 <p align="center">
-	<img src="/assets/images/algorithm/dijkstra/procedure_09.png"><br>
-	<em>caption</em>
+	<img src="/assets/images/algorithm/dijkstra/procedure_09.png">
+	우선순위 큐의 항목들 중 가장 작은 거리를 갖는 노드가 맨 밑으로 온다.<br>
 </p>
 
 <p align="center">
-	<img src="/assets/images/algorithm/dijkstra/procedure_10.png"><br>
-	<em>caption</em>
+	<img src="/assets/images/algorithm/dijkstra/procedure_10.png">
+	큐에서 값을 꺼내며 방문 (결과 행렬 갱신)<br>
+	(<strong>b</strong>, 12)가 큐에 먼저 입력되었지만, 우선순위 큐에 의해 더 거리가 가까운 (<strong>b</strong>, 9)가 먼저 꺼내어지는 것을 확인할 수 있다.
 </p>
 
 <p align="center">
-	<img src="/assets/images/algorithm/dijkstra/procedure_11.png"><br>
-	<em>caption</em>
+	<img src="/assets/images/algorithm/dijkstra/procedure_11.png">
+	우선순위 큐의 top에 있는 (<strong>b</strong>, 12) 를 꺼낸다. 이미 방문했으므로 skip.
+	우선순위 큐가 empty 상태가 되면 알고리즘이 종료된다.
 </p>
 
 방법
@@ -88,42 +105,7 @@ visited[] 사용하여 한 번 방문한 node 는 다시 방문하지 않음
 node 개수가 적거나 edge 개수가 많은 경우 유리
 
 #### 알고리즘 과정 예제
-우선순위 큐
-(Node 번호, node 까지 최단거리)를 쌍으로 저장
-최단거리 값을 기준으로 항상 최저값을 가장 아래에 정렬해줌
-결과 행렬
-모든 노드까지의 최단거리가 저장됨
-알고리즘 진행
-항상 최단거리인 node 를 우선적으로 방문
-모든 node 를 한 번 씩만 방문하는 것을 보장
 
-노드 s 에서부터 시작 (방문여부, 결과행렬 초기화)
-
-연결된 모든 인접 노드를 큐에 추가
-
-큐에서 값을 빼내면서 해당 노드를 방문
-자동으로 가장 작은 거리를 갖는 값이 나옴
-해당 노드까지의 최단거리이므로, 결과 행렬에 저장
-
-방문한 노드에서부터 재귀적으로 같은 동작 반복 수행
-인접 노드를 큐에 추가
-현재까지의 최단거리(2) + 인접 노드까지의 거리(4)를 더한 값이 인접 노드까지의 총 거리가 됨
-이미 방문한 노드(s)는 다시 갈 필요 없으므로 제외
-
-우선순위 큐에 의해 추가된 것 중 가장 작은 거리를 갖는 노드가 맨 밑으로 온다.
-
-큐에서 값을 꺼내며 방문
-결과 행렬 갱신
-
-방문한 노드의 인접 노드를 다시 큐에 추가
-
-우선순위 큐에 의해 추가된 것 중 가장 작은 거리를 갖는 노드가 맨 밑으로 온다.
-
-큐에서 값을 꺼내며 방문
-결과 행렬 갱신
-
-이미 방문했으므로 (b, 12) 는 skip
-우선순위 큐가 empty 가 되면 알고리즘 종료
 
 #### 고찰
 우선순위 큐를 쓰는 이유?
